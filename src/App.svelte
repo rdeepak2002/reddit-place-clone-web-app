@@ -1,30 +1,112 @@
 <script lang="ts">
-	export let name: string;
+	import axios from "axios";
+
+	let imageUrl = "http://localhost:3000/static/image.png";
+
+	let xInput = 0;
+	let yInput = 0;
+	let redInput = 0;
+	let greenInput = 0;
+	let blueInput = 0;
+
+	const submitPixel = (e) => {
+		e.preventDefault();
+
+		let data = JSON.stringify({
+			"x": 11,
+			"y": 10,
+			"red": 10,
+			"green": 0,
+			"blue": 0
+		});
+
+		let config = {
+			method: 'post',
+			url: 'http://localhost:3000/set_pixel',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			data : data
+		};
+
+		axios(config)
+				.then(function (response) {
+					console.log(JSON.stringify(response.data));
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
+
+		// let xVal = parseInt($("#x-input").val())
+		// let yVal = parseInt($("#y-input").val())
+		// let redVal = parseInt($("#red-input").val())
+		// let greenVal = parseInt($("#green-input").val())
+		// let blueVal = parseInt($("#blue-input").val())
+		//
+		// let postData = {
+		// 	"x": xVal,
+		// 	"y": yVal,
+		// 	"red": redVal,
+		// 	"green": greenVal,
+		// 	"blue": blueVal
+		// };
+		//
+		// let settings = {
+		// 	"url": "/set_pixel",
+		// 	"method": "POST",
+		// 	"timeout": 0,
+		// 	"headers": {
+		// 		"Content-Type": "application/json"
+		// 	},
+		// 	"data": JSON.stringify(postData),
+		// };
+		//
+		// console.log(postData)
+
+		// $.ajax(settings).done(function (response) {
+		// 	if (response?.status === "error") {
+		// 		alert(response?.message || "Error creating pixel.");
+		// 	}
+		//
+		// 	$("#output_image").attr("src", "/static/image.png?" + (new Date()).getTime());
+		// }).catch(function (err) {
+		// 	alert(JSON.parse(err?.responseText || {}).message || "Error creating pixel.");
+		// 	console.error(err?.responseText);
+		// });
+	}
+
+	function validate() {
+		console.log("I'm the validate() function")
+	}
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<img id="output_image" style="border: dotted black; width: 300px; height: 300px;" alt="image"
+		 src={imageUrl}/>
+	<form on:submit|preventDefault={submitPixel}>
+		<label>
+			X
+			<input type="number" id="x-input" bind:value={xInput}/>
+		</label>
+		<label>
+			Y
+			<input type="number" id="y-input" bind:value={yInput}/>
+		</label>
+		<label>
+			Red
+			<input type="number" id="red-input" bind:value={redInput}/>
+		</label>
+		<label>
+			Green
+			<input type="number" id="green-input" bind:value={greenInput}/>
+		</label>
+		<label>
+			Blue
+			<input type="number" id="blue-input" bind:value={blueInput}/>
+		</label>
+		<button type="submit" onsubmit="submitPixel(e)">Set Pixel</button>
+	</form>
 </main>
 
 <style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
 </style>
