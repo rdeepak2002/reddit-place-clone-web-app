@@ -13,11 +13,21 @@
 	let greenInput = 0;
 	let blueInput = 0;
 
+	function isInt(value) {
+		return !isNaN(value) && (function(x) { return (x | 0) === x; })(parseFloat(value))
+	}
+
 	const submitPixel = (e) => {
 		e.preventDefault();
 
 		if (xInput === undefined || yInput === undefined || redInput === undefined
 				|| greenInput === undefined || blueInput === undefined) {
+			console.error("Invalid input");
+			return;
+		}
+
+		if (!isInt(xInput) || !isInt(yInput) || !isInt(redInput)
+				|| !isInt(greenInput) || !isInt(blueInput)) {
 			console.error("Invalid input");
 			return;
 		}

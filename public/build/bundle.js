@@ -2195,32 +2195,32 @@ var app = (function () {
     			set_style(img, "height", "300px");
     			attr_dev(img, "alt", "image");
     			if (!src_url_equal(img.src, img_src_value = /*imageUrl*/ ctx[5])) attr_dev(img, "src", img_src_value);
-    			add_location(img, file, 43, 1, 1121);
+    			add_location(img, file, 51, 1, 1413);
     			attr_dev(input0, "type", "number");
     			attr_dev(input0, "id", "x-input");
-    			add_location(input0, file, 48, 3, 1300);
-    			add_location(label0, file, 46, 2, 1284);
+    			add_location(input0, file, 56, 3, 1592);
+    			add_location(label0, file, 54, 2, 1576);
     			attr_dev(input1, "type", "number");
     			attr_dev(input1, "id", "y-input");
-    			add_location(input1, file, 52, 3, 1385);
-    			add_location(label1, file, 50, 2, 1369);
+    			add_location(input1, file, 60, 3, 1677);
+    			add_location(label1, file, 58, 2, 1661);
     			attr_dev(input2, "type", "number");
     			attr_dev(input2, "id", "red-input");
-    			add_location(input2, file, 56, 3, 1472);
-    			add_location(label2, file, 54, 2, 1454);
+    			add_location(input2, file, 64, 3, 1764);
+    			add_location(label2, file, 62, 2, 1746);
     			attr_dev(input3, "type", "number");
     			attr_dev(input3, "id", "green-input");
-    			add_location(input3, file, 60, 3, 1565);
-    			add_location(label3, file, 58, 2, 1545);
+    			add_location(input3, file, 68, 3, 1857);
+    			add_location(label3, file, 66, 2, 1837);
     			attr_dev(input4, "type", "number");
     			attr_dev(input4, "id", "blue-input");
-    			add_location(input4, file, 64, 3, 1661);
-    			add_location(label4, file, 62, 2, 1642);
+    			add_location(input4, file, 72, 3, 1953);
+    			add_location(label4, file, 70, 2, 1934);
     			attr_dev(button, "type", "submit");
     			attr_dev(button, "onsubmit", "submitPixel(e)");
-    			add_location(button, file, 66, 2, 1736);
-    			add_location(form, file, 45, 1, 1236);
-    			add_location(main, file, 42, 0, 1113);
+    			add_location(button, file, 74, 2, 2028);
+    			add_location(form, file, 53, 1, 1528);
+    			add_location(main, file, 50, 0, 1405);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -2311,6 +2311,12 @@ var app = (function () {
     	return block;
     }
 
+    function isInt(value) {
+    	return !isNaN(value) && (function (x) {
+    		return (x | 0) === x;
+    	})(parseFloat(value));
+    }
+
     function instance($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('App', slots, []);
@@ -2327,6 +2333,11 @@ var app = (function () {
     		e.preventDefault();
 
     		if (xInput === undefined || yInput === undefined || redInput === undefined || greenInput === undefined || blueInput === undefined) {
+    			console.error("Invalid input");
+    			return;
+    		}
+
+    		if (!isInt(xInput) || !isInt(yInput) || !isInt(redInput) || !isInt(greenInput) || !isInt(blueInput)) {
     			console.error("Invalid input");
     			return;
     		}
@@ -2395,6 +2406,7 @@ var app = (function () {
     		redInput,
     		greenInput,
     		blueInput,
+    		isInt,
     		submitPixel
     	});
 
