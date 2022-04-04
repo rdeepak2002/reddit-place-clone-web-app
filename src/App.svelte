@@ -61,8 +61,7 @@
 </script>
 
 <main>
-	<img id="output_image" style="border: dotted black; width: 300px; height: 300px;" alt="image"
-		 src={imageUrl}/>
+	<img id="output_image" alt="image" src={imageUrl}/>
 	<form on:submit|preventDefault={submitPixel}>
 		<label>
 			X
@@ -89,4 +88,12 @@
 </main>
 
 <style>
+	img {
+		border: dotted black;
+		width: 300px;
+		height: 300px;
+		image-rendering: pixelated;
+		image-rendering: -moz-crisp-edges;
+		image-rendering: crisp-edges;
+	}
 </style>
