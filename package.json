@@ -9,11 +9,6 @@
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {
-
-  },
-  "dependencies": {
-    "axios": "^0.26.1",
-    "sirv-cli": "^2.0.0",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
     "@rollup/plugin-typescript": "^8.0.0",
@@ -28,5 +23,9 @@
     "svelte-preprocess": "^4.0.0",
     "tslib": "^2.0.0",
     "typescript": "^4.0.0"
+  },
+  "dependencies": {
+    "axios": "^0.26.1",
+    "sirv-cli": "^2.0.0"
   }
 }
