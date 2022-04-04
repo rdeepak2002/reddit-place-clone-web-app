@@ -1,7 +1,9 @@
 <script lang="ts">
 	import axios from "axios";
 
-	let serverUrl = "http://localhost:3000";
+	let isProd = location.protocol === 'https:';
+
+	let serverUrl = isProd ? "" : "http://localhost:3000";
 
 	let imageUrl = `${serverUrl}/static/image.png`;
 
