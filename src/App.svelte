@@ -1,7 +1,9 @@
 <script lang="ts">
 	import axios from "axios";
 
-	let imageUrl = "http://localhost:3000/static/image.png";
+	let serverUrl = "http://localhost:3000";
+
+	let imageUrl = `${serverUrl}/static/image.png`;
 
 	let xInput = 0;
 	let yInput = 0;
@@ -12,17 +14,23 @@
 	const submitPixel = (e) => {
 		e.preventDefault();
 
+		if (xInput === undefined || yInput === undefined || redInput === undefined
+				|| greenInput === undefined || blueInput === undefined) {
+			console.error("Invalid input");
+			return;
+		}
+
 		let data = JSON.stringify({
-			"x": 11,
-			"y": 10,
-			"red": 10,
-			"green": 0,
-			"blue": 0
+			"x": xInput,
+			"y": yInput,
+			"red": redInput,
+			"green": greenInput,
+			"blue": blueInput
 		});
 
 		let config = {
 			method: 'post',
-			url: 'http://localhost:3000/set_pixel',
+			url: `${serverUrl}/set_pixel`,
 			headers: {
 				'Content-Type': 'application/json'
 			},
@@ -32,51 +40,11 @@
 		axios(config)
 				.then(function (response) {
 					console.log(JSON.stringify(response.data));
+					location.reload();
 				})
 				.catch(function (error) {
 					console.log(error);
 				});
-
-		// let xVal = parseInt($("#x-input").val())
-		// let yVal = parseInt($("#y-input").val())
-		// let redVal = parseInt($("#red-input").val())
-		// let greenVal = parseInt($("#green-input").val())
-		// let blueVal = parseInt($("#blue-input").val())
-		//
-		// let postData = {
-		// 	"x": xVal,
-		// 	"y": yVal,
-		// 	"red": redVal,
-		// 	"green": greenVal,
-		// 	"blue": blueVal
-		// };
-		//
-		// let settings = {
-		// 	"url": "/set_pixel",
-		// 	"method": "POST",
-		// 	"timeout": 0,
-		// 	"headers": {
-		// 		"Content-Type": "application/json"
-		// 	},
-		// 	"data": JSON.stringify(postData),
-		// };
-		//
-		// console.log(postData)
-
-		// $.ajax(settings).done(function (response) {
-		// 	if (response?.status === "error") {
-		// 		alert(response?.message || "Error creating pixel.");
-		// 	}
-		//
-		// 	$("#output_image").attr("src", "/static/image.png?" + (new Date()).getTime());
-		// }).catch(function (err) {
-		// 	alert(JSON.parse(err?.responseText || {}).message || "Error creating pixel.");
-		// 	console.error(err?.responseText);
-		// });
-	}
-
-	function validate() {
-		console.log("I'm the validate() function")
 	}
 </script>
 
