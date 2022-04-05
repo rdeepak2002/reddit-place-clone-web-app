@@ -13,6 +13,7 @@
 	let blueInput = 0;
 	let user: {id: string, name: string, imageUrl: string, email: string, id_token: string} = undefined;
 	let loadingAuthState = true;
+	let expirationTime = undefined;
 
 	// check if a variable is an integer
 	const isInt = (value) => {
@@ -63,6 +64,13 @@
 					if (response?.data?.status === "success") {
 						console.log(response?.data);
 						location.reload();
+					} else if (response?.data?.status === "ratelimit") {
+						console.log(response?.data);
+						expirationTime = response?.data?.message;
+
+						if (expirationTime !== undefined) {
+							expirationTime = parseInt(expirationTime)
+						}
 					} else {
 						console.log(response?.data);
 					}
@@ -160,6 +168,10 @@
 		</form>
 
 		<a on:click={signOut}>Sign out</a>
+	{/if}
+
+	{#if expirationTime !== undefined && isInt(expirationTime) && expirationTime - Math.floor(Date.now() / 1000) >= 0}
+		<p>{expirationTime - Math.floor(Date.now() / 1000)} seconds until you can place a new pixel</p>
 	{/if}
 
 	<div id="my-signin2" style={`visibility: ${(user === undefined && loadingAuthState === false) ? 'visible' : 'hidden'}`}></div>
