@@ -8,6 +8,8 @@ Web application for https://github.com/rdeepak2002/reddit-place-clone-server
 
 ## Get Started
 
+Modify Google authentication client id in App.svelte
+
 ```shell
 yarn
 yarn dev

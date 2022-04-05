@@ -11,7 +11,7 @@
 	let redInput = 0;
 	let greenInput = 0;
 	let blueInput = 0;
-	let user: {id: string, name: string, imageUrl: string, email: string} = undefined;
+	let user: {id: string, name: string, imageUrl: string, email: string, id_token: string} = undefined;
 	let loadingAuthState = true;
 
 	// check if a variable is an integer
@@ -23,15 +23,20 @@
 	const submitPixel = (e) => {
 		e.preventDefault();
 
+		if (user === undefined || user.id_token === undefined) {
+			console.error("Invalid user");
+			return;
+		}
+
 		if (xInput === undefined || yInput === undefined || redInput === undefined
 				|| greenInput === undefined || blueInput === undefined) {
-			console.error("Invalid input");
+			console.error("Undefined input");
 			return;
 		}
 
 		if (!isInt(xInput) || !isInt(yInput) || !isInt(redInput)
 				|| !isInt(greenInput) || !isInt(blueInput)) {
-			console.error("Invalid input");
+			console.error("Non-integer input");
 			return;
 		}
 
@@ -47,6 +52,7 @@
 			method: 'post',
 			url: `${serverUrl}/set_pixel`,
 			headers: {
+				'Authorization': `Bearer ${user.id_token.toString()}`,
 				'Content-Type': 'application/json'
 			},
 			data : data
@@ -71,7 +77,8 @@
 			id: profile.getId(),
 			name: profile.getName(),
 			imageUrl: profile.getImageUrl(),
-			email: profile.getEmail()
+			email: profile.getEmail(),
+			id_token: googleUser.getAuthResponse().id_token
 		}
 	}
 
