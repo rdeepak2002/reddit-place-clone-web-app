@@ -60,8 +60,12 @@
 
 		axios(config)
 				.then(function (response) {
-					console.log(JSON.stringify(response.data));
-					location.reload();
+					if (response?.data?.status === "success") {
+						console.log(response?.data);
+						location.reload();
+					} else {
+						console.log(response?.data);
+					}
 				})
 				.catch(function (error) {
 					console.log(error);
