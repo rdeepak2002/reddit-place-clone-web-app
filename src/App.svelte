@@ -1,5 +1,8 @@
 <script lang="ts">
 	import axios from "axios";
+
+	console.log("Init App.svelte");
+
 	let isProd = location.protocol === 'https:';
 	let serverUrl = isProd ? "" : "http://localhost:3000";
 	let imageUrl = `${serverUrl}/static/image.png`;
@@ -8,12 +11,15 @@
 	let redInput = 0;
 	let greenInput = 0;
 	let blueInput = 0;
-	// var gapi;
+	let user: {id: string, name: string, imageUrl: string, email: string} = undefined;
+	let loadingAuthState = true;
 
+	// check if a variable is an integer
 	const isInt = (value) => {
 		return !isNaN(value) && (function(x) { return (x | 0) === x; })(parseFloat(value))
 	}
 
+	// send pixel to server
 	const submitPixel = (e) => {
 		e.preventDefault();
 
@@ -56,56 +62,96 @@
 				});
 	}
 
-	(window as any).onSignIn = (googleUser) => {
+	// when user signs in
+	const onSuccess = (googleUser) => {
+		console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
 		const profile = googleUser.getBasicProfile();
-		console.log('ID: ' + profile.getId());
-		console.log('Name: ' + profile.getName());
-		console.log('Image URL: ' + profile.getImageUrl());
-		console.log('Email: ' + profile.getEmail());
-	};
 
+		user = {
+			id: profile.getId(),
+			name: profile.getName(),
+			imageUrl: profile.getImageUrl(),
+			email: profile.getEmail()
+		}
+	}
+
+	// when unable to sign in user
+	const onFailure = (error) => {
+		console.log("Failure for login", error);
+		user = undefined;
+	}
+
+	// when auth has loaded
+	(window as any).onLoadCallback = () => {
+		console.log("Auth state loaded");
+
+		// @ts-ignore
+		gapi.load('auth2', function() {
+			// @ts-ignore
+			gapi.auth2.init({
+				client_id: "512758578665-7mrm2s66ub7rd983qu3sv51ohgh79pqh.apps.googleusercontent.com"
+			}).then(() => {
+				loadingAuthState = false;
+			})
+		});
+
+		// @ts-ignore
+		gapi.signin2.render('my-signin2', {
+			'longtitle': true,
+			'theme': 'light',
+			'onsuccess': onSuccess,
+			'onfailure': onFailure
+		});
+	}
+
+	// function to sign out
 	const signOut = () => {
 		// @ts-ignore
 		const auth2 = gapi.auth2.getAuthInstance();
 		auth2.signOut().then(() => {
 			console.log("Signed out");
+			user = undefined;
+			location.reload();
 		});
 	}
 </script>
 
 <svelte:head>
-	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	<script src="https://apis.google.com/js/platform.js?onload=onLoadCallback" async defer></script>
 </svelte:head>
 
 <main>
 	<img id="output_image" alt="image" src={imageUrl}/>
-	<form on:submit|preventDefault={submitPixel}>
-		<label>
-			X
-			<input type="number" id="x-input" bind:value={xInput}/>
-		</label>
-		<label>
-			Y
-			<input type="number" id="y-input" bind:value={yInput}/>
-		</label>
-		<label>
-			Red
-			<input type="number" id="red-input" bind:value={redInput}/>
-		</label>
-		<label>
-			Green
-			<input type="number" id="green-input" bind:value={greenInput}/>
-		</label>
-		<label>
-			Blue
-			<input type="number" id="blue-input" bind:value={blueInput}/>
-		</label>
-		<button type="submit" onsubmit="submitPixel(e)">Set Pixel</button>
-	</form>
 
-	<div class="g-signin2" data-longtitle="true" data-onsuccess="onSignIn"></div>
+	{#if user !== undefined && loadingAuthState === false}
+		<form on:submit|preventDefault={submitPixel}>
+			<label>
+				X
+				<input type="number" id="x-input" bind:value={xInput}/>
+			</label>
+			<label>
+				Y
+				<input type="number" id="y-input" bind:value={yInput}/>
+			</label>
+			<label>
+				Red
+				<input type="number" id="red-input" bind:value={redInput}/>
+			</label>
+			<label>
+				Green
+				<input type="number" id="green-input" bind:value={greenInput}/>
+			</label>
+			<label>
+				Blue
+				<input type="number" id="blue-input" bind:value={blueInput}/>
+			</label>
+			<button type="submit" onsubmit="submitPixel(e)">Set Pixel</button>
+		</form>
 
-	<a on:click={signOut}>Sign out</a>
+		<a on:click={signOut}>Sign out</a>
+	{/if}
+
+	<div id="my-signin2" style={`visibility: ${(user === undefined && loadingAuthState === false) ? 'visible' : 'hidden'}`}></div>
 </main>
 
 <style>
@@ -116,5 +162,9 @@
 		image-rendering: pixelated;
 		image-rendering: -moz-crisp-edges;
 		image-rendering: crisp-edges;
+	}
+	
+	a:hover {
+		cursor: pointer;
 	}
 </style>
