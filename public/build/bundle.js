@@ -2124,137 +2124,167 @@ var app = (function () {
     const file = "src/App.svelte";
 
     function create_fragment(ctx) {
+    	let script;
+    	let script_src_value;
+    	let t0;
     	let main;
     	let img;
     	let img_src_value;
-    	let t0;
+    	let t1;
     	let form;
     	let label0;
-    	let t1;
-    	let input0;
     	let t2;
-    	let label1;
+    	let input0;
     	let t3;
-    	let input1;
+    	let label1;
     	let t4;
-    	let label2;
+    	let input1;
     	let t5;
-    	let input2;
+    	let label2;
     	let t6;
-    	let label3;
+    	let input2;
     	let t7;
-    	let input3;
+    	let label3;
     	let t8;
-    	let label4;
+    	let input3;
     	let t9;
-    	let input4;
+    	let label4;
     	let t10;
+    	let input4;
+    	let t11;
     	let button;
+    	let t13;
+    	let div;
+    	let t14;
+    	let a;
     	let mounted;
     	let dispose;
 
     	const block = {
     		c: function create() {
+    			script = element("script");
+    			t0 = space();
     			main = element("main");
     			img = element("img");
-    			t0 = space();
+    			t1 = space();
     			form = element("form");
     			label0 = element("label");
-    			t1 = text("X\n\t\t\t");
+    			t2 = text("X\n\t\t\t");
     			input0 = element("input");
-    			t2 = space();
+    			t3 = space();
     			label1 = element("label");
-    			t3 = text("Y\n\t\t\t");
+    			t4 = text("Y\n\t\t\t");
     			input1 = element("input");
-    			t4 = space();
+    			t5 = space();
     			label2 = element("label");
-    			t5 = text("Red\n\t\t\t");
+    			t6 = text("Red\n\t\t\t");
     			input2 = element("input");
-    			t6 = space();
+    			t7 = space();
     			label3 = element("label");
-    			t7 = text("Green\n\t\t\t");
+    			t8 = text("Green\n\t\t\t");
     			input3 = element("input");
-    			t8 = space();
+    			t9 = space();
     			label4 = element("label");
-    			t9 = text("Blue\n\t\t\t");
+    			t10 = text("Blue\n\t\t\t");
     			input4 = element("input");
-    			t10 = space();
+    			t11 = space();
     			button = element("button");
     			button.textContent = "Set Pixel";
+    			t13 = space();
+    			div = element("div");
+    			t14 = space();
+    			a = element("a");
+    			a.textContent = "Sign out";
+    			if (!src_url_equal(script.src, script_src_value = "https://apis.google.com/js/platform.js")) attr_dev(script, "src", script_src_value);
+    			script.async = true;
+    			script.defer = true;
+    			add_location(script, file, 66, 1, 1890);
     			attr_dev(img, "id", "output_image");
     			attr_dev(img, "alt", "image");
     			if (!src_url_equal(img.src, img_src_value = /*imageUrl*/ ctx[5])) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "class", "svelte-1wnwktg");
-    			add_location(img, file, 51, 1, 1413);
+    			add_location(img, file, 70, 1, 1989);
     			attr_dev(input0, "type", "number");
     			attr_dev(input0, "id", "x-input");
-    			add_location(input0, file, 55, 3, 1530);
-    			add_location(label0, file, 53, 2, 1514);
+    			add_location(input0, file, 74, 3, 2106);
+    			add_location(label0, file, 72, 2, 2090);
     			attr_dev(input1, "type", "number");
     			attr_dev(input1, "id", "y-input");
-    			add_location(input1, file, 59, 3, 1615);
-    			add_location(label1, file, 57, 2, 1599);
+    			add_location(input1, file, 78, 3, 2191);
+    			add_location(label1, file, 76, 2, 2175);
     			attr_dev(input2, "type", "number");
     			attr_dev(input2, "id", "red-input");
-    			add_location(input2, file, 63, 3, 1702);
-    			add_location(label2, file, 61, 2, 1684);
+    			add_location(input2, file, 82, 3, 2278);
+    			add_location(label2, file, 80, 2, 2260);
     			attr_dev(input3, "type", "number");
     			attr_dev(input3, "id", "green-input");
-    			add_location(input3, file, 67, 3, 1795);
-    			add_location(label3, file, 65, 2, 1775);
+    			add_location(input3, file, 86, 3, 2371);
+    			add_location(label3, file, 84, 2, 2351);
     			attr_dev(input4, "type", "number");
     			attr_dev(input4, "id", "blue-input");
-    			add_location(input4, file, 71, 3, 1891);
-    			add_location(label4, file, 69, 2, 1872);
+    			add_location(input4, file, 90, 3, 2467);
+    			add_location(label4, file, 88, 2, 2448);
     			attr_dev(button, "type", "submit");
     			attr_dev(button, "onsubmit", "submitPixel(e)");
-    			add_location(button, file, 73, 2, 1966);
-    			add_location(form, file, 52, 1, 1466);
-    			add_location(main, file, 50, 0, 1405);
+    			add_location(button, file, 92, 2, 2542);
+    			add_location(form, file, 71, 1, 2042);
+    			attr_dev(div, "class", "g-signin2");
+    			attr_dev(div, "data-longtitle", "true");
+    			attr_dev(div, "data-onsuccess", "onSignIn");
+    			add_location(div, file, 95, 1, 2620);
+    			add_location(a, file, 97, 1, 2700);
+    			add_location(main, file, 69, 0, 1981);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
+    			append_dev(document.head, script);
+    			insert_dev(target, t0, anchor);
     			insert_dev(target, main, anchor);
     			append_dev(main, img);
-    			append_dev(main, t0);
+    			append_dev(main, t1);
     			append_dev(main, form);
     			append_dev(form, label0);
-    			append_dev(label0, t1);
+    			append_dev(label0, t2);
     			append_dev(label0, input0);
     			set_input_value(input0, /*xInput*/ ctx[0]);
-    			append_dev(form, t2);
+    			append_dev(form, t3);
     			append_dev(form, label1);
-    			append_dev(label1, t3);
+    			append_dev(label1, t4);
     			append_dev(label1, input1);
     			set_input_value(input1, /*yInput*/ ctx[1]);
-    			append_dev(form, t4);
+    			append_dev(form, t5);
     			append_dev(form, label2);
-    			append_dev(label2, t5);
+    			append_dev(label2, t6);
     			append_dev(label2, input2);
     			set_input_value(input2, /*redInput*/ ctx[2]);
-    			append_dev(form, t6);
+    			append_dev(form, t7);
     			append_dev(form, label3);
-    			append_dev(label3, t7);
+    			append_dev(label3, t8);
     			append_dev(label3, input3);
     			set_input_value(input3, /*greenInput*/ ctx[3]);
-    			append_dev(form, t8);
+    			append_dev(form, t9);
     			append_dev(form, label4);
-    			append_dev(label4, t9);
+    			append_dev(label4, t10);
     			append_dev(label4, input4);
     			set_input_value(input4, /*blueInput*/ ctx[4]);
-    			append_dev(form, t10);
+    			append_dev(form, t11);
     			append_dev(form, button);
+    			append_dev(main, t13);
+    			append_dev(main, div);
+    			append_dev(main, t14);
+    			append_dev(main, a);
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(input0, "input", /*input0_input_handler*/ ctx[7]),
-    					listen_dev(input1, "input", /*input1_input_handler*/ ctx[8]),
-    					listen_dev(input2, "input", /*input2_input_handler*/ ctx[9]),
-    					listen_dev(input3, "input", /*input3_input_handler*/ ctx[10]),
-    					listen_dev(input4, "input", /*input4_input_handler*/ ctx[11]),
-    					listen_dev(form, "submit", prevent_default(/*submitPixel*/ ctx[6]), false, true, false)
+    					listen_dev(input0, "input", /*input0_input_handler*/ ctx[8]),
+    					listen_dev(input1, "input", /*input1_input_handler*/ ctx[9]),
+    					listen_dev(input2, "input", /*input2_input_handler*/ ctx[10]),
+    					listen_dev(input3, "input", /*input3_input_handler*/ ctx[11]),
+    					listen_dev(input4, "input", /*input4_input_handler*/ ctx[12]),
+    					listen_dev(form, "submit", prevent_default(/*submitPixel*/ ctx[6]), false, true, false),
+    					listen_dev(a, "click", /*signOut*/ ctx[7], false, false, false)
     				];
 
     				mounted = true;
@@ -2284,6 +2314,8 @@ var app = (function () {
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
+    			detach_dev(script);
+    			if (detaching) detach_dev(t0);
     			if (detaching) detach_dev(main);
     			mounted = false;
     			run_all(dispose);
@@ -2301,12 +2333,6 @@ var app = (function () {
     	return block;
     }
 
-    function isInt(value) {
-    	return !isNaN(value) && (function (x) {
-    		return (x | 0) === x;
-    	})(parseFloat(value));
-    }
-
     function instance($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('App', slots, []);
@@ -2318,6 +2344,13 @@ var app = (function () {
     	let redInput = 0;
     	let greenInput = 0;
     	let blueInput = 0;
+
+    	// var gapi;
+    	const isInt = value => {
+    		return !isNaN(value) && (function (x) {
+    			return (x | 0) === x;
+    		})(parseFloat(value));
+    	};
 
     	const submitPixel = e => {
     		e.preventDefault();
@@ -2352,6 +2385,23 @@ var app = (function () {
     			location.reload();
     		}).catch(function (error) {
     			console.log(error);
+    		});
+    	};
+
+    	window.onSignIn = googleUser => {
+    		const profile = googleUser.getBasicProfile();
+    		console.log('ID: ' + profile.getId());
+    		console.log('Name: ' + profile.getName());
+    		console.log('Image URL: ' + profile.getImageUrl());
+    		console.log('Email: ' + profile.getEmail());
+    	};
+
+    	const signOut = () => {
+    		// @ts-ignore
+    		const auth2 = gapi.auth2.getAuthInstance();
+
+    		auth2.signOut().then(() => {
+    			console.log("Signed out");
     		});
     	};
 
@@ -2397,7 +2447,8 @@ var app = (function () {
     		greenInput,
     		blueInput,
     		isInt,
-    		submitPixel
+    		submitPixel,
+    		signOut
     	});
 
     	$$self.$inject_state = $$props => {
@@ -2423,6 +2474,7 @@ var app = (function () {
     		blueInput,
     		imageUrl,
     		submitPixel,
+    		signOut,
     		input0_input_handler,
     		input1_input_handler,
     		input2_input_handler,

@@ -1,19 +1,16 @@
 <script lang="ts">
 	import axios from "axios";
-
 	let isProd = location.protocol === 'https:';
-
 	let serverUrl = isProd ? "" : "http://localhost:3000";
-
 	let imageUrl = `${serverUrl}/static/image.png`;
-
 	let xInput = 0;
 	let yInput = 0;
 	let redInput = 0;
 	let greenInput = 0;
 	let blueInput = 0;
+	// var gapi;
 
-	function isInt(value) {
+	const isInt = (value) => {
 		return !isNaN(value) && (function(x) { return (x | 0) === x; })(parseFloat(value))
 	}
 
@@ -58,7 +55,27 @@
 					console.log(error);
 				});
 	}
+
+	(window as any).onSignIn = (googleUser) => {
+		const profile = googleUser.getBasicProfile();
+		console.log('ID: ' + profile.getId());
+		console.log('Name: ' + profile.getName());
+		console.log('Image URL: ' + profile.getImageUrl());
+		console.log('Email: ' + profile.getEmail());
+	};
+
+	const signOut = () => {
+		// @ts-ignore
+		const auth2 = gapi.auth2.getAuthInstance();
+		auth2.signOut().then(() => {
+			console.log("Signed out");
+		});
+	}
 </script>
+
+<svelte:head>
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+</svelte:head>
 
 <main>
 	<img id="output_image" alt="image" src={imageUrl}/>
@@ -85,6 +102,10 @@
 		</label>
 		<button type="submit" onsubmit="submitPixel(e)">Set Pixel</button>
 	</form>
+
+	<div class="g-signin2" data-longtitle="true" data-onsuccess="onSignIn"></div>
+
+	<a on:click={signOut}>Sign out</a>
 </main>
 
 <style>
