@@ -14,6 +14,11 @@
 	let user: {id: string, name: string, imageUrl: string, email: string, id_token: string} = undefined;
 	let loadingAuthState = true;
 	let expirationTime = undefined;
+	let currentTime = Math.floor(Date.now() / 1000);
+
+	setInterval(() => {
+		currentTime = Math.floor(Date.now() / 1000);
+	}, 500)
 
 	// check if a variable is an integer
 	const isInt = (value) => {
@@ -170,8 +175,8 @@
 		<a on:click={signOut}>Sign out</a>
 	{/if}
 
-	{#if expirationTime !== undefined && isInt(expirationTime) && expirationTime - Math.floor(Date.now() / 1000) >= 0}
-		<p>{expirationTime - Math.floor(Date.now() / 1000)} seconds until you can place a new pixel</p>
+	{#if expirationTime !== undefined && isInt(expirationTime) && expirationTime - currentTime >= 0}
+		<p>{expirationTime - currentTime} seconds until you can place a new pixel</p>
 	{/if}
 
 	<div id="my-signin2" style={`visibility: ${(user === undefined && loadingAuthState === false) ? 'visible' : 'hidden'}`}></div>
