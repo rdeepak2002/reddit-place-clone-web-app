@@ -145,7 +145,7 @@
 </svelte:head>
 
 <main>
-	<img id="output_image" alt="image" src={imageUrl}/>
+	<img id="output_image" alt="Reddit place canvas." src={imageUrl}/>
 
 	{#if user !== undefined && loadingAuthState === false}
 		<form on:submit|preventDefault={submitPixel}>
@@ -172,7 +172,7 @@
 			<button type="submit" onsubmit="submitPixel(e)">Set Pixel</button>
 		</form>
 
-		<a on:click={signOut}>Sign out</a>
+		<a href="javascript:void(0);" on:click={signOut}>Sign out</a>
 	{/if}
 
 	{#if expirationTime !== undefined && isInt(expirationTime) && expirationTime - currentTime >= 0}
