@@ -8,14 +8,12 @@
     let imageUrl = `${serverUrl}/static/image.png`;
     let xInput = 0;
     let yInput = 0;
-    let redInput = 0;
-    let greenInput = 0;
-    let blueInput = 0;
     let user: { id: string, name: string, imageUrl: string, email: string, id_token: string } = undefined;
     let loadingAuthState = true;
     let expirationTime = undefined;
     let currentTime = Math.floor(Date.now() / 1000);
     let madeFirstRequest = false;
+    let color = "#000000"
 
     // update current time global variable every 500 milliseconds
     setInterval(() => {
@@ -32,7 +30,12 @@
     // handle form submission
     const submitPixel = (e) => {
         e.preventDefault();
-        drawPixel(xInput, yInput, redInput, greenInput, blueInput);
+
+        const colorInRgb = hexToRgb(color);
+
+        if (colorInRgb) {
+            drawPixel(xInput, yInput, colorInRgb.r, colorInRgb.g, colorInRgb.b);
+        }
     }
 
     // send pixel to server
@@ -154,6 +157,22 @@
             location.reload();
         });
     }
+
+    const hexToRgb = (hex) : {r: number, g: number, b: number} => {
+        // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+        let shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+        hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+            return r + r + g + g + b + b;
+        });
+
+        let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : null;
+    }
+
 </script>
 
 <svelte:head>
@@ -179,18 +198,8 @@
                 </div>
 
                 <div>
-                    <label for="red-input">Red</label>
-                    <input type="number" id="red-input" bind:value={redInput}/>
-                </div>
-
-                <div>
-                    <label for="green-input">Green</label>
-                    <input type="number" id="green-input" bind:value={greenInput}/>
-                </div>
-
-                <div>
-                    <label for="blue-input">Blue</label>
-                    <input type="number" id="blue-input" bind:value={blueInput}/>
+                    <label for="color-input">Color</label>
+                    <input type="color" id="color-input" bind:value={color}>
                 </div>
 
                 <button type="submit">Set Pixel</button>
@@ -245,5 +254,18 @@
         justify-content: center;
         align-items: center;
         align-content: center;
+    }
+
+    .form > div {
+        width: 300px;
+    }
+
+    .form > div > input{
+        width: 100%;
+    }
+
+    #color-input {
+        width: 100%;
+        height: 50px;
     }
 </style>
